@@ -15,3 +15,26 @@ body{
     width: 200px;
     height: 20px;
 }
+
+.showitems .eachitem{
+    margin-left:-115px;
+    
+    /* width:100px */
+}
+
+.showitems .eachitem h3{
+    display: inline;
+    padding:0 105px;
+}
+
+.showitems .eachitem i{
+    cursor: pointer;
+}
+
+.showitem .btn{
+    cursor: pointer;
+}
+
+.addItems i{
+    cursor: pointer;
+}

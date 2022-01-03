@@ -1,13 +1,27 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addTodo, deleteTodo, removeTodo } from '../actions/index';
+import { connect } from 'react-redux';
+import { addTodo, removeTodo } from '../actions/index';
+import List from './list';
 import './todo.css';
 
 
-const Todo = () => {
+const Todo = (props) => {
+    console.log(props)
     const [inputData, setInputData] = useState('');
-    const list = useSelector((state) => state.todoReducers.list);
-    const dispatch = useDispatch();
+
+    const handleKeyPress = (target) => {
+        if (target.charCode == 13) {
+            props.dispatch(addTodo(inputData));
+            setInputData('');
+        }
+    }
+
+    // const list = useSelector((state) => state.todoReducers.list);
+    // console.log("useSelector",list);
+    // const dispatch = useDispatch();
+
+
     return (
         <div className="main-div">
             <div className="child-div">
@@ -18,35 +32,27 @@ const Todo = () => {
                 </figure>
 
                 <div className="addItems">
-                    <input type="text" placeholder="Add items..." value={inputData} onChange={(event) => setInputData(event.target.value)} />
-                    <i className="fas fa-plus add-btn" onClick={() => dispatch(addTodo(inputData),
+                    <input type="text" placeholder="Add items..." value={inputData} onChange={(event) => setInputData(event.target.value)} onKeyPress={handleKeyPress} />
+                    <i className="fas fa-plus add-btn" onClick={() => props.dispatch(addTodo(inputData),
                         setInputData(''))}></i>
                 </div>
+                <List />
 
-                <div className="showitems">
-                    {
-                        list.map((elem) => {
-                            return (
-                                <div className="eachitem" key={elem.id}>
-                                    <h3>{elem.data}</h3>
-                                    <div className="todo-btn">
-                                        <i className="fas fa-trash-alt add-btn" onClick={() => dispatch(deleteTodo(elem.id))}></i>
-                                    </div>
-                                </div>
-                            )
-
-                        })
-                    }
-
-
-                </div>
-
-                <div className="showitems">
-                    <button className="btn effect04" data-sm-link-text="remove All" onClick={()=>dispatch(removeTodo())}><span>Check list</span></button>
+                <div className="showitem">
+                    <button className="btn effect04" data-sm-link-text="remove All" onClick={() => props.dispatch(removeTodo())}><span>Check list</span></button>
                 </div>
             </div>
         </div >
     )
 }
 
-export default Todo
+const mapDispatchToProps = (dispatch) => {
+    return {
+        dispatch
+
+    }
+}
+
+
+
+export default connect(mapDispatchToProps)(Todo);
