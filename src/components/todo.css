@@ -1,0 +1,17 @@
+body{
+    background-color: blueviolet;
+}
+
+.child-div{
+    text-align: center;
+        display: block;
+}
+.title{
+    font-weight: bold;
+    color:aqua
+}
+
+.addItems input{
+    width: 200px;
+    height: 20px;
+}
